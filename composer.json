@@ -1,0 +1,34 @@
+{
+    "name": "friendsofhyperf/service-governance-extra",
+    "description": "Extra component for hyperf service-governance",
+    "type": "library",
+    "license": "MIT",
+    "authors": [{
+        "name": "huangdijia",
+        "email": "huangdijia@gmail.com"
+    }],
+    "require": {
+        "hyperf/service-governance": "^2.0",
+        "hyperf/signal": "^2.0",
+        "hyperf/event": "^2.0",
+        "hyperf/contract": "^2.0"
+    },
+    "require-dev": {
+        "swoole/ide-helper": "^4.5",
+        "psr/log": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "FriendsOfHyperf\\ServiceGovernanceExtra\\": "src/"
+        }
+    },
+    "extra": {
+        "hyperf": {
+            "config": "FriendsOfHyperf\\ServiceGovernanceExtra\\ConfigProvider"
+        }
+    },
+    "scripts": {
+        "cs-fix": "php-cs-fixer fix $1",
+        "analyse": "phpstan analyse --memory-limit 300M -l 0 -c phpstan.neon ./src"
+    }
+}
