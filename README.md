@@ -1,13 +1,13 @@
-# hyperf-service-governance-auto-deregister
+# service-governance-extra
 
-[![Latest Stable Version](https://poser.pugx.org/huangdijia/hyperf-service-governance-auto-deregister/version.png)](https://packagist.org/packages/huangdijia/hyperf-service-governance-auto-deregister)
-[![Total Downloads](https://poser.pugx.org/huangdijia/hyperf-service-governance-auto-deregister/d/total.png)](https://packagist.org/packages/huangdijia/hyperf-service-governance-auto-deregister)
-[![GitHub license](https://img.shields.io/github/license/huangdijia/hyperf-service-governance-auto-deregister)](https://github.com/huangdijia/hyperf-service-governance-auto-deregister)
+[![Latest Stable Version](https://poser.pugx.org/friendsofhyperf/service-governance-extra/version.png)](https://packagist.org/packages/friendsofhyperf/service-governance-extra)
+[![Total Downloads](https://poser.pugx.org/friendsofhyperf/service-governance-extra/d/total.png)](https://packagist.org/packages/friendsofhyperf/service-governance-extra)
+[![GitHub license](https://img.shields.io/github/license/friendsofhyperf/service-governance-extra)](https://github.com/friendsofhyperf/service-governance-extra)
 
-A service-governance component for hyperf
+Extra component for hyperf service-governance
 
 ## Installation
 
 ~~~bash
-composer require huangdijia/hyperf-service-governance-auto-deregister
+composer require friendsofhyperf/service-governance-extra
 ~~~
