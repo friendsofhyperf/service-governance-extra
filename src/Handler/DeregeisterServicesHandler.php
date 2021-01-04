@@ -52,7 +52,7 @@ class DeregeisterServicesHandler implements SignalHandlerInterface
      * @var array
      */
     protected $defaultLoggerContext = [
-        'component' => 'service-governance-auto-deregister',
+        'component' => 'service-governance-extra',
     ];
 
     public function __construct(ContainerInterface $container)
