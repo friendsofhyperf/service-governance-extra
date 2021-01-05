@@ -81,6 +81,7 @@ class DeregeisterServicesHandler implements SignalHandlerInterface
 
         $services = $this->serviceManager->all();
         $servers = $this->getServers();
+        $callables = [];
 
         foreach ($services as $serviceName => $serviceProtocols) {
             foreach ($serviceProtocols as $paths) {
@@ -93,11 +94,18 @@ class DeregeisterServicesHandler implements SignalHandlerInterface
 
                     switch ($service['publishTo']) {
                         case 'consul':
-                            $this->deregisterConsul($serviceName, $address, $port);
+                            $callables[$serviceName] = function () use ($serviceName, $address, $port) {
+                                $this->deregisterConsul($serviceName, $address, $port);
+                            };
+
                             break;
                     }
                 }
             }
+        }
+
+        if (count($callables)) {
+            parallel($callables);
         }
     }
 
