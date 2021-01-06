@@ -75,8 +75,8 @@ class DeregisterServicesHandler implements SignalHandlerInterface
     public function handle(int $signal): void
     {
         if ($signal !== SIGINT) {
-            $time = $this->config->get('server.settings.max_wait_time', 3);
-            sleep($time);
+            $seconds = (int) $this->config->get('server.settings.max_wait_time', 3);
+            sleep($seconds);
         }
 
         $services = $this->serviceManager->all();
