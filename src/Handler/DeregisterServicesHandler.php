@@ -10,6 +10,7 @@ declare(strict_types=1);
  */
 namespace FriendsOfHyperf\ServiceGovernanceExtra\Handler;
 
+use FriendsOfHyperf\ServiceGovernanceExtra\Lock;
 use FriendsOfHyperf\ServiceGovernanceExtra\Register\ConsulHealth;
 use Hyperf\Consul\Exception\ServerException;
 use Hyperf\Contract\ConfigInterface;
@@ -20,6 +21,7 @@ use Hyperf\Signal\SignalHandlerInterface;
 use InvalidArgumentException;
 use Psr\Container\ContainerInterface;
 use RuntimeException;
+use Throwable;
 
 class DeregisterServicesHandler implements SignalHandlerInterface
 {
@@ -49,6 +51,11 @@ class DeregisterServicesHandler implements SignalHandlerInterface
     protected $config;
 
     /**
+     * @var Lock
+     */
+    protected $lock;
+
+    /**
      * @var array
      */
     protected $defaultLoggerContext = [
@@ -62,6 +69,7 @@ class DeregisterServicesHandler implements SignalHandlerInterface
         $this->consulHealth = $container->get(ConsulHealth::class);
         $this->logger = $container->get(StdoutLoggerInterface::class);
         $this->serviceManager = $container->get(ServiceManager::class);
+        $this->lock = $container->get(Lock::class);
     }
 
     public function listen(): array
@@ -79,20 +87,25 @@ class DeregisterServicesHandler implements SignalHandlerInterface
             sleep($seconds);
         }
 
-        $services = $this->serviceManager->all();
-        $servers = $this->getServers();
-        $callables = [];
+        if (! $this->lock->trylock()) {
+            return;
+        }
 
-        foreach ($services as $serviceName => $serviceProtocols) {
-            foreach ($serviceProtocols as $paths) {
-                foreach ($paths as $path => $service) {
-                    if (! isset($service['publishTo'], $service['server'])) {
-                        continue;
-                    }
+        try {
+            $services = $this->serviceManager->all();
+            $servers = $this->getServers();
+            $callables = [];
 
-                    [$address, $port] = $servers[$service['server']];
+            foreach ($services as $serviceName => $serviceProtocols) {
+                foreach ($serviceProtocols as $paths) {
+                    foreach ($paths as $path => $service) {
+                        if (! isset($service['publishTo'], $service['server'])) {
+                            continue;
+                        }
 
-                    switch ($service['publishTo']) {
+                        [$address, $port] = $servers[$service['server']];
+
+                        switch ($service['publishTo']) {
                         case 'consul':
                             $callables[$serviceName] = function () use ($serviceName, $address, $port) {
                                 $this->deregisterConsul($serviceName, $address, $port);
@@ -100,12 +113,17 @@ class DeregisterServicesHandler implements SignalHandlerInterface
 
                             break;
                     }
+                    }
                 }
             }
-        }
 
-        if (count($callables)) {
-            parallel($callables);
+            if (count($callables)) {
+                parallel($callables);
+            }
+        } catch (Throwable $e) {
+            throw $e;
+        } finally {
+            $this->lock->unlock();
         }
     }
 
