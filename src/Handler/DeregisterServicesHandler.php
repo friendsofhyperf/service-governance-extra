@@ -21,7 +21,7 @@ use InvalidArgumentException;
 use Psr\Container\ContainerInterface;
 use RuntimeException;
 
-class DeregeisterServicesHandler implements SignalHandlerInterface
+class DeregisterServicesHandler implements SignalHandlerInterface
 {
     /**
      * @var ConsulAgent

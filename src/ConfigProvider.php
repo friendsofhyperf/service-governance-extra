@@ -10,7 +10,7 @@ declare(strict_types=1);
  */
 namespace FriendsOfHyperf\ServiceGovernanceExtra;
 
-use FriendsOfHyperf\ServiceGovernanceExtra\Handler\DeregeisterServicesHandler;
+use FriendsOfHyperf\ServiceGovernanceExtra\Handler\DeregisterServicesHandler;
 use FriendsOfHyperf\ServiceGovernanceExtra\Register\ConsulHealth;
 use FriendsOfHyperf\ServiceGovernanceExtra\Register\ConsulHealthFactory;
 
@@ -24,7 +24,7 @@ class ConfigProvider
             ],
             'signal' => [
                 'handlers' => [
-                    DeregeisterServicesHandler::class => PHP_INT_MIN,
+                    DeregisterServicesHandler::class => PHP_INT_MIN,
                 ],
             ],
         ];
