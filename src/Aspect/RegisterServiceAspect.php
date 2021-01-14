@@ -10,13 +10,9 @@ declare(strict_types=1);
  */
 namespace FriendsOfHyperf\ServiceGovernanceExtra\Aspect;
 
-use Hyperf\Di\Annotation\Aspect;
 use Hyperf\Di\Aop\AbstractAspect;
 use Hyperf\Di\Aop\ProceedingJoinPoint;
 
-/**
- * @Aspect
- */
 class RegisterServiceAspect extends AbstractAspect
 {
     public $classes = [

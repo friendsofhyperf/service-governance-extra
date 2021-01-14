@@ -19,6 +19,9 @@ class ConfigProvider
                 Register\ConsulHealth::class => Register\ConsulHealthFactory::class,
                 Lock::class => Lock::class,
             ],
+            'aspects' => [
+                Aspect\RegisterServiceAspect::class,
+            ],
             'listeners' => [
                 Listener\RegisterLockListener::class,
             ],
