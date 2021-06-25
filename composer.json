@@ -13,7 +13,7 @@
         "hyperf/service-governance": "^2.0",
         "hyperf/signal": "^2.0",
         "hyperf/contract": "^2.0",
-        "friendsofphp/php-cs-fixer": "^2.17",
+        "friendsofphp/php-cs-fixer": "^3.0",
         "phpstan/phpstan": "^0.12.66"
     },
     "require-dev": {
