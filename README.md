@@ -11,3 +11,5 @@ Extra component for hyperf service-governance
 ~~~bash
 composer require friendsofhyperf/service-governance-extra
 ~~~
+
+> No-need for >= 2.2
